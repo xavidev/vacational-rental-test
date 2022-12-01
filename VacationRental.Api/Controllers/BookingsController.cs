@@ -9,14 +9,14 @@ namespace VacationRental.Api.Controllers
     [ApiController]
     public class BookingsController : ControllerBase
     {
-        private readonly IDictionary<int, RentalViewModel> _rentals;
+        private readonly RentalCatalog rentalCatalog;
         private readonly IDictionary<int, BookingViewModel> _bookings;
 
         public BookingsController(
-            IDictionary<int, RentalViewModel> rentals,
+            RentalCatalog rentalCatalog,
             IDictionary<int, BookingViewModel> bookings)
         {
-            _rentals = rentals;
+            this.rentalCatalog = rentalCatalog;
             _bookings = bookings;
         }
 
@@ -35,7 +35,7 @@ namespace VacationRental.Api.Controllers
         {
             if (model.Nights <= 0)
                 throw new ApplicationException("Nigts must be positive");
-            if (!_rentals.ContainsKey(model.RentalId))
+            if (!rentalCatalog.HaveRental(model.RentalId))
                 throw new ApplicationException("Rental not found");
 
             for (var i = 0; i < model.Nights; i++)
@@ -51,7 +51,7 @@ namespace VacationRental.Api.Controllers
                         count++;
                     }
                 }
-                if (count >= _rentals[model.RentalId].Units)
+                if (count >= rentalCatalog.Get(model.RentalId).Units)
                     throw new ApplicationException("Not available");
             }
 
