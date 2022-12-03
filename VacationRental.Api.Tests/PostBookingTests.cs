@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using VacationRental.Api.Controllers.Models;
 using VacationRental.Api.Models;
 using Xunit;
 
