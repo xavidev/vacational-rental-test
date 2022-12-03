@@ -21,9 +21,6 @@ namespace VacationRental.Api.Controllers
         [Route("{rentalId:int}")]
         public RentalViewModel Get(int rentalId)
         {
-            if (!rentalCatalog.HaveRental(rentalId))
-                throw new ApplicationException("Rental not found");
-
             Rental rental = rentalCatalog.Get(rentalId);
             
             return new RentalViewModel()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace VacationRental.Api.Models
@@ -13,15 +14,17 @@ namespace VacationRental.Api.Models
 
             return id;
         }
-
+        
+        public Rental Get(int rentalId)
+        {
+            if(!HaveRental(rentalId)) throw new ApplicationException("Rental not found");
+ 
+            return _rentals[rentalId];
+        }
+        
         public  bool HaveRental(int rentalId)
         {
             return _rentals.ContainsKey(rentalId);
-        }
-
-        public Rental Get(int rentalId)
-        {
-            return _rentals[rentalId];
         }
     }
 }
