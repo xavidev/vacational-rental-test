@@ -53,10 +53,7 @@ namespace VacationRental.Api.Tests
         {
             await Assert.ThrowsAsync<ApplicationException>(async () =>
             {
-                using (var postBooking2Response =
-                       await _client.PostAsJsonAsync($"/api/v1/bookings", bookingRequest))
-                {
-                }
+                await _client.PostAsJsonAsync($"/api/v1/bookings", bookingRequest);
             });
         }
 
