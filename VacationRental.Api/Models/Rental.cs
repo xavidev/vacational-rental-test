@@ -10,7 +10,6 @@ namespace VacationRental.Api.Models
 
         public static Rental Create(int id, int units)
         {
-            
             return new Rental(id, new RentalAvailability(units), units);
         }
 
@@ -20,13 +19,10 @@ namespace VacationRental.Api.Models
             this.availability = availability;
             Units = units;
         }
-        
+
         public void Assign(BookingRequest request)
         {
-            if (this.availability.IsAvailableFor(request.From, request.Nights))
-            {
-                this.availability.SetAvailability(request.From, request.Nights);
-            }
+            this.availability.TryBook(request.From, request.Nights);
         }
     }
 }
