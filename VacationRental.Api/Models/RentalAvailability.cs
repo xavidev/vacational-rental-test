@@ -15,15 +15,6 @@ namespace VacationRental.Api.Models
             this.units = units;
             this.reservations = new Dictionary<int, int>();
         }
-        private bool IsAvailableFor(DateTime @from, int nights)
-        {
-            if(this.reservations.TryGetValue(GetKey(@from, nights), out int unitsLeft))
-            {
-                return unitsLeft > 0;
-            }
-
-            return true;
-        }
         
         public bool TryBook(DateTime from, int nights)
         {
@@ -37,6 +28,16 @@ namespace VacationRental.Api.Models
             else
             {
                 this.reservations.Add(key, this.units - 1);
+            }
+
+            return true;
+        }
+        
+        private bool IsAvailableFor(DateTime @from, int nights)
+        {
+            if(this.reservations.TryGetValue(GetKey(@from, nights), out int unitsLeft))
+            {
+                return unitsLeft > 0;
             }
 
             return true;
