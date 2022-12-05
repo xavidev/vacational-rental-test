@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using NodaTime.Testing.Extensions;
 using VacationRental.Api.Controllers.Models;
 using VacationRental.Api.Models;
 using Xunit;
@@ -21,12 +22,7 @@ namespace VacationRental.Api.Tests
         [Fact]
         public async Task GivenCompleteRequest_WhenPostBooking_ThenAGetReturnsTheCreatedBooking()
         {
-            BookingBindingModel bookingRequest = CreateBookingRequest(
-                await CreateRental(4),
-                3,
-                new DateTime(2001, 01, 01));
-            
-            await AssertBookingSuccess(bookingRequest);
+            await AssertBookingSuccess(BookingRequest.For(await CreateRental(4)).From(1.December(2022)).Nights(3));
         }
         
         [Fact]
@@ -34,19 +30,27 @@ namespace VacationRental.Api.Tests
         {
             var rentalId = await CreateRental(1);
             
-            BookingBindingModel bookingRequest = CreateBookingRequest(
-                rentalId,
-                3,
-                new DateTime(2002, 01, 01));
+            await AssertBookingSuccess(BookingRequest.For(rentalId).From(1.December(2022)).Nights(3));
             
-            await AssertBookingSuccess(bookingRequest);
+            await AssertBookingFail(BookingRequest.For(rentalId).From(2.December(2022)).Nights(1));
+        }
+
+        [Fact]
+        public async Task Test_Overlapping_Booking()
+        {
+            var rentalId = await CreateRental(4);
             
-            bookingRequest = CreateBookingRequest(
-                rentalId,
-                1,
-                new DateTime(2002, 01, 02));
+            await AssertBookingSuccess(BookingRequest.For(rentalId).From(5.December(2022)).Nights(1));
             
-            await AssertBookingFail(bookingRequest);
+            await AssertBookingSuccess(BookingRequest.For(rentalId).From(6.December(2022)).Nights(3));
+            
+            await AssertBookingSuccess(BookingRequest.For(rentalId).From(5.December(2022)).Nights(2));
+            
+            await AssertBookingSuccess(BookingRequest.For(rentalId).From(5.December(2022)).Nights(3));
+
+            await AssertBookingSuccess(BookingRequest.For(rentalId).From(8.December(2022)).Nights(1));
+            
+            await AssertBookingFail(BookingRequest.For(rentalId).From(5.December(2022)).Nights(3));
         }
 
         private async Task AssertBookingFail(BookingBindingModel bookingRequest)
@@ -78,17 +82,6 @@ namespace VacationRental.Api.Tests
             var postBookingResult = await postBookingResponse.Content.ReadAsAsync<ResourceIdViewModel>();
 
             return postBookingResult.Id;
-        }
-
-        private static BookingBindingModel CreateBookingRequest(int rentalId, int nights, DateTime @from)
-        {
-            var postBookingRequest = new BookingBindingModel
-            {
-                RentalId = rentalId,
-                Nights = nights,
-                Start = @from
-            };
-            return postBookingRequest;
         }
 
         private async Task<int> CreateRental(int rentalUnits)
