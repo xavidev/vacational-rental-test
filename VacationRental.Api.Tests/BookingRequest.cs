@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NodaTime;
 using VacationRental.Api.Controllers.Models;
 

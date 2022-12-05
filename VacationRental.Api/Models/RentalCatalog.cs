@@ -10,7 +10,7 @@ namespace VacationRental.Api.Models
         public int CreateRental(int units)
         {
             var id = _rentals.Keys.Count + 1;
-            _rentals.Add(id, new Rental(id, units));
+            _rentals.Add(id, Rental.Create(id, units));
 
             return id;
         }

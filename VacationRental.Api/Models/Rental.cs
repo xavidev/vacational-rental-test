@@ -1,15 +1,32 @@
+using VacationRental.Api.Booking;
+
 namespace VacationRental.Api.Models
 {
     public class Rental
     {
         private readonly int id;
+        private readonly RentalAvailability availability;
+        public int Units { get; }
 
-        public Rental(int id, int units)
+        public static Rental Create(int id, int units)
         {
-            this.id = id;
-            Units = units;
+            
+            return new Rental(id, new RentalAvailability(units), units);
         }
 
-        public int Units { get; }
+        private Rental(int id, RentalAvailability availability, int units)
+        {
+            this.id = id;
+            this.availability = availability;
+            Units = units;
+        }
+        
+        public void Assign(BookingRequest request)
+        {
+            if (this.availability.IsAvailableFor(request.From, request.Nights))
+            {
+                this.availability.SetAvailability(request.From, request.Nights);
+            }
+        }
     }
 }
