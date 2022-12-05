@@ -1,7 +1,7 @@
 using NodaTime;
 using VacationRental.Api.Controllers.Models;
 
-namespace VacationRental.Api.Tests
+namespace VacationRental.Api.Tests.Integration
 {
     public class BookingRequest
     {

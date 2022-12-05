@@ -8,6 +8,8 @@ namespace VacationRental.Api.Models
 
         public RentalAvailability(int units)
         {
+            if (units < 0) throw new ArgumentException("Units must be positive");
+            
             this.units = units;
         }
         public bool IsAvailableFor(DateTime @from, int nights)

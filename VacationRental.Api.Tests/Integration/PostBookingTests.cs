@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using NodaTime.Testing.Extensions;
 using VacationRental.Api.Controllers.Models;
-using VacationRental.Api.Models;
 using Xunit;
 
-namespace VacationRental.Api.Tests
+namespace VacationRental.Api.Tests.Integration
 {
     [Collection("Integration")]
     public class PostBookingTests
