@@ -35,18 +35,6 @@ namespace VacationRental.Api.Tests
             return this;
         }
 
-        public BookingBindingModel Build()
-        {
-            var postBookingRequest = new BookingBindingModel
-            {
-                RentalId = rentalId,
-                Nights = nights,
-                Start = @from.ToDateTimeUnspecified()
-            };
-            
-            return postBookingRequest;
-        } 
-     
         public static implicit operator BookingBindingModel(BookingRequest request) => new BookingBindingModel
         {
             RentalId = request.rentalId,
