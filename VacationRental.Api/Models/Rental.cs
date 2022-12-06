@@ -34,6 +34,7 @@ namespace VacationRental.Api.Models
                 if (!unit.TryBook(request)) continue;
                 
                 request.FulFill();
+                return;
             }
         }
 
