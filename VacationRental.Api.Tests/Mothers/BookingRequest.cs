@@ -1,13 +1,18 @@
-using NodaTime;
+using System;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using VacationRental.Api.Controllers.Models;
 
-namespace VacationRental.Api.Tests.Integration
+namespace VacationRental.Api.Tests.Mothers
 {
     public class BookingRequest
     {
         private readonly int rentalId;
-        private LocalDate @from;
+        private DateTime @from;
         private int nights;
+
+        public int RentalId => this.rentalId;
+        public DateTime RentalFrom => this.@from;
+        public int RentalNights => this.nights;
 
         private BookingRequest(int rentalId)
         {
@@ -19,7 +24,7 @@ namespace VacationRental.Api.Tests.Integration
             return new BookingRequest(rentalId);
         }
 
-        public BookingRequest From(LocalDate from)
+        public BookingRequest From(DateTime from)
         {
             this.from = from;
             
@@ -37,7 +42,7 @@ namespace VacationRental.Api.Tests.Integration
         {
             RentalId = request.rentalId,
             Nights = request.nights,
-            Start = request.@from.ToDateTimeUnspecified()
+            Start = request.@from
         };
     }
 }

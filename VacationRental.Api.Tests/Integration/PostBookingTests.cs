@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using NodaTime.Testing.Extensions;
 using VacationRental.Api.Controllers.Models;
+using VacationRental.Api.Tests.Mothers;
 using Xunit;
+using FluentAssertions.Extensions;
 
 namespace VacationRental.Api.Tests.Integration
 {

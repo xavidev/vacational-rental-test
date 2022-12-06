@@ -19,13 +19,22 @@ namespace VacationRental.Api.Tests.Unit
 
             sut = new BookingHandler(catalog);
             
-            this.AssertSuccessBooking(rentalId, 5.December(2022), 1);
-            this.AssertSuccessBooking(rentalId, 6.December(2022), 3);
+            AssertBookingSuccess(Mothers.BookingRequest.For(rentalId).From(5.December(2022)).Nights(1));
+            AssertBookingSuccess(Mothers.BookingRequest.For(rentalId).From(6.December(2022)).Nights(3));
+            AssertBookingSuccess(Mothers.BookingRequest.For(rentalId).From(5.December(2022)).Nights(2));
+            AssertBookingSuccess(Mothers.BookingRequest.For(rentalId).From(5.December(2022)).Nights(3));
+            AssertBookingSuccess(Mothers.BookingRequest.For(rentalId).From(8.December(2022)).Nights(1));
+            AssertBookingFail(Mothers.BookingRequest.For(rentalId).From(5.December(2022)).Nights(3));
         }
 
-        private void AssertSuccessBooking(int rentalId, DateTime from, int nights)
+        private void AssertBookingFail(Mothers.BookingRequest request)
         {
-            sut.Book(rentalId, 5.December(2022), 1).Should().BeTrue();
+            this.sut.Book(request.RentalId, request.RentalFrom, request.RentalNights).Should().BeFalse();
+        }
+
+        private void AssertBookingSuccess(Mothers.BookingRequest request)
+        {
+            this.sut.Book(request.RentalId, request.RentalFrom, request.RentalNights).Should().BeTrue();
         }
     }
 }
