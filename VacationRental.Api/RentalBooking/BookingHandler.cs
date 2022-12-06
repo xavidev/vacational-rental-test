@@ -1,7 +1,7 @@
 using System;
 using VacationRental.Api.Models;
 
-namespace VacationRental.Api.Booking
+namespace VacationRental.Api.RentalBooking
 {
     public class BookingHandler
     {
@@ -12,12 +12,14 @@ namespace VacationRental.Api.Booking
             this.catalog = catalog;
         }
 
-        public void Book(int rentalId, DateTime from, int nights)
+        public bool Book(int rentalId, DateTime from, int nights)
         {
             var request = new BookingRequest(from, nights);
 
             Rental rental = this.catalog.Get(rentalId);
             rental.Assign(request);
+
+            return request.IsFulFilled();
         }
     }
 }

@@ -1,54 +1,29 @@
 using System;
 using System.Collections.Generic;
+using VacationRental.Api.RentalBooking;
 
 namespace VacationRental.Api.Models
 {
     public class RentalAvailability
     {
-        private readonly int units;
-        private readonly Dictionary<int, int> reservations;
+        private readonly List<Booking> bookings;
 
-        public RentalAvailability(int units)
+        public RentalAvailability()
         {
-            if (units < 0) throw new ArgumentException("Units must be positive");
-            
-            this.units = units;
-            this.reservations = new Dictionary<int, int>();
+            this.bookings = new List<Booking>();
         }
         
-        public bool TryBook(DateTime from, int nights)
+        public bool TryBook(BookingRequest bookingRequest)
         {
-            if (!IsAvailableFor(from, nights)) return false;
+            var possibleBooking = new Booking(bookingRequest.From, bookingRequest.To);
+            foreach (var booking in bookings)
+            {
+                if (booking.Overlap(possibleBooking)) return false;
+            }
             
-            var key = GetKey(@from, nights);
-            if (this.reservations.ContainsKey(key))
-            {
-                this.reservations[key] -= 1;
-            }
-            else
-            {
-                this.reservations.Add(key, this.units - 1);
-            }
-
+            bookings.Add(possibleBooking);
+            
             return true;
-        }
-        
-        private bool IsAvailableFor(DateTime @from, int nights)
-        {
-            if(this.reservations.TryGetValue(GetKey(@from, nights), out int unitsLeft))
-            {
-                return unitsLeft > 0;
-            }
-
-            return true;
-        }
-        
-        private static int GetKey(DateTime @from, int nights)
-        {
-            var to = @from.AddDays(nights);
-            var key = @from.GetHashCode() + to.GetHashCode();
-            
-            return key;
         }
     }
 }
