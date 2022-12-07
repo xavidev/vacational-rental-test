@@ -51,11 +51,6 @@ namespace VacationRental.Api.Models
         {
             this.rentalUnits.Add(new RentalUnit());
         }
-
-        public IEnumerable<Booking> GetBookings(DateTime december, DateTime dateTime)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     internal class RentalUnit
