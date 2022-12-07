@@ -9,6 +9,7 @@ namespace VacationRental.Api.Models
         private readonly DateTime to;
         private readonly int nights;
         private bool reserved;
+        private readonly int preparationDays;
 
         public int RentalId => this.rentalId;
         
@@ -19,6 +20,13 @@ namespace VacationRental.Api.Models
             this.nights = nights;
             this.to = from.AddDays(nights);
             this.reserved = false;
+        }
+
+        public Booking(int rentalId, DateTime from, int nights, int preparationDays) 
+            : this(rentalId, from, nights)
+        {
+            this.preparationDays = preparationDays;
+            this.to = from.AddDays(this.nights + this.preparationDays);
         }
         
         public bool Overlap(Booking other)
@@ -49,9 +57,16 @@ namespace VacationRental.Api.Models
         public bool HasReservationFor(DateTime date)
         {
             if (!this.IsReserved()) return false;
-            if (this.rentalId != rentalId) return false;
-
+            
             return this.@from <= date && this.to > date;
+        }
+
+        public bool IsInPreparation(DateTime date)
+        {
+            if (!this.IsReserved()) return false;
+            if (this.preparationDays == 0) return false;
+
+            return date > this.@from.AddDays(this.nights) && date <= this.to;
         }
 
         public BookingInfo GetInfo()
