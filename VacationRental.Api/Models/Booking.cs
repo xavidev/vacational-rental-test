@@ -9,12 +9,7 @@ namespace VacationRental.Api.Models
         private readonly DateTime to;
         private readonly int nights;
         private bool reserved;
-
-        public int RentalId => this.rentalId;
-        public DateTime From => this.@from;
-        public int Nights => this.nights;
-
-
+        
         public Booking(int rentalId, DateTime from, int nights)
         {
             this.rentalId = rentalId;
