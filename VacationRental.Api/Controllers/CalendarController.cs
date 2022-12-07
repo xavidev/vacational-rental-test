@@ -34,7 +34,8 @@ namespace VacationRental.Api.Controllers
             {
                 Bookings = x.Bookings.Select(b => new CalendarBookingViewModel()
                 {
-                    Id = b.Id
+                    Id = b.Id,
+                    Unit = b.Unit
                 }).ToList(),
                 Date = x.Date
             }).ToList());

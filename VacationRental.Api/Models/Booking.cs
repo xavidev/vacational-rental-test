@@ -13,6 +13,7 @@ namespace VacationRental.Api.Models
         private int unit;
 
         public int RentalId => this.rentalId;
+        public int Unit => this.unit;
         
         public Booking(int rentalId, DateTime from, int nights)
         {

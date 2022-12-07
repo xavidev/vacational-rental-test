@@ -38,7 +38,7 @@ namespace VacationRental.Api.Models
                 {
                     if (booking.Value.HasReservationFor(date.Date))
                     {
-                        date.Bookings.Add(new DateBooking() { Id = booking.Key });
+                        date.Bookings.Add(new DateBooking() { Id = booking.Key, Unit = booking.Value.Unit });
                     }
                 }
 
@@ -57,6 +57,7 @@ namespace VacationRental.Api.Models
     public class DateBooking
     {
         public int Id { get; set; }
+        public int Unit { get; set; }
     }
 
     public class CalendarDate
