@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace VacationRental.Api.Models
@@ -40,6 +41,11 @@ namespace VacationRental.Api.Models
         private void AddUnit()
         {
             this.rentalUnits.Add(new RentalUnit());
+        }
+
+        public IEnumerable<Booking> GetBookings(DateTime december, DateTime dateTime)
+        {
+            throw new NotImplementedException();
         }
     }
 
