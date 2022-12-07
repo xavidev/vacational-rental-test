@@ -39,11 +39,7 @@ namespace VacationRental.Api.Models
         {
             foreach (var unit in rentalUnits)
             {
-                if (unit.TryBook(booking))
-                {
-                    booking.SetReserved();
-                    return;
-                }
+                if (unit.TryBook(booking)) return;
             }
         }
 
@@ -71,6 +67,7 @@ namespace VacationRental.Api.Models
                 if (booking.Overlap(bookingRequest)) return false;
             }
             
+            bookingRequest.SetReserved(this.unit);
             bookings.Add(bookingRequest);
             
             return true;

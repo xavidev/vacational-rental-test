@@ -45,19 +45,19 @@ namespace VacationRental.Api.Tests.Unit
         public void Test_Preparation_Time()
         {
             var booking = new Booking(1, 7.December(2022), 3);
-            booking.SetReserved();
+            booking.SetReserved(1);
             booking.IsInPreparation(8.December(2022)).Should().BeFalse();
             
             booking = new Booking(1, 7.December(2022), 3, 1);
-            booking.SetReserved();
+            booking.SetReserved(1);
             booking.IsInPreparation(11.December(2022)).Should().BeTrue();
             
             booking = new Booking(1, 7.December(2022), 3, 1);
-            booking.SetReserved();
+            booking.SetReserved(1);
             booking.IsInPreparation(12.December(2022)).Should().BeFalse();
             
             booking = new Booking(1, 7.December(2022), 3, 3);
-            booking.SetReserved();
+            booking.SetReserved(1);
             booking.IsInPreparation(13.December(2022)).Should().BeTrue();
         }
     }

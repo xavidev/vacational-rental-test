@@ -10,6 +10,7 @@ namespace VacationRental.Api.Models
         private readonly int nights;
         private bool reserved;
         private readonly int preparationDays;
+        private int unit;
 
         public int RentalId => this.rentalId;
         
@@ -44,9 +45,10 @@ namespace VacationRental.Api.Models
             return this.@from == other.@from;
         }
 
-        public void SetReserved()
+        public void SetReserved(int unit)
         {
             this.reserved = true;
+            this.unit = unit;
         }
 
         public bool IsReserved()
