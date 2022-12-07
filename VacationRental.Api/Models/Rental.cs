@@ -26,7 +26,7 @@ namespace VacationRental.Api.Models
 
             for (int i = 0; i < units; i++)
             {
-                this.AddUnit();
+                this.AddUnit(i+1);
             }
         }
 
@@ -47,24 +47,33 @@ namespace VacationRental.Api.Models
             }
         }
 
-        private void AddUnit()
+        private void AddUnit(int unit)
         {
-            this.rentalUnits.Add(new RentalUnit());
+            this.rentalUnits.Add(new RentalUnit(unit));
         }
     }
 
     internal class RentalUnit
     {
-        private readonly RentalAvailability availability;
+        private readonly int unit;
+        private readonly List<Booking> bookings;
 
-        public RentalUnit()
+        public RentalUnit(int unit)
         {
-            this.availability = new RentalAvailability();
+            this.unit = unit;
+            this.bookings = new List<Booking>();
         }
-
-        public bool TryBook(Booking request)
+        
+        public bool TryBook(Booking bookingRequest)
         {
-            return this.availability.TryBook(request);
+            foreach (var booking in bookings)
+            {
+                if (booking.Overlap(bookingRequest)) return false;
+            }
+            
+            bookings.Add(bookingRequest);
+            
+            return true;
         }
     }
 }
