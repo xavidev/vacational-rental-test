@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using VacationRental.Api.RentalBooking;
 
 namespace VacationRental.Api.Models
 {
