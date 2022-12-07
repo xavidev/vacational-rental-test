@@ -8,6 +8,7 @@ namespace VacationRental.Api.Models
         private readonly int id;
         private readonly List<RentalUnit> rentalUnits;
         public int Units { get; }
+        public int Id => this.id;
 
         public static Rental Create(int id, int units)
         {

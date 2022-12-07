@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+
 
 namespace VacationRental.Api.Models
 {
@@ -19,5 +21,47 @@ namespace VacationRental.Api.Models
 
             return bookings[bookingId];
         }
+
+        public Calendar GetBookingCalendarFor(int rentalId, DateTime from, int nights)
+        {
+            var result  = new Calendar();
+            for (var i = 0; i < nights; i++)
+            {
+                var date = new CalendarDate
+                {
+                    Date = from.Date.AddDays(i),
+                    Bookings = new List<DateBooking>()
+                };
+
+                foreach (var booking in bookings)
+                {
+                    if (booking.Value.RentalId == rentalId
+                        && booking.Value.From <= date.Date && booking.Value.From.AddDays(booking.Value.Nights) > date.Date)
+                    {
+                        date.Bookings.Add(new DateBooking() { Id = booking.Key });
+                    }
+                }
+
+                result.Dates.Add(date);
+            }
+
+            return result;
+        }
+    }
+
+    public class Calendar
+    {
+        public List<CalendarDate> Dates { get; set; } = new List<CalendarDate>();
+    }
+
+    public class DateBooking
+    {
+        public int Id { get; set; }
+    }
+
+    public class CalendarDate
+    {
+        public DateTime Date { get; set; }
+        public List<DateBooking> Bookings { get; set; } = new List<DateBooking>();
     }
 }

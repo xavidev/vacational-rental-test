@@ -30,6 +30,7 @@ namespace VacationRental.Api
             services.AddSingleton(new RentalCatalog());
             services.AddSingleton(new BookingCatalog());
             services.AddScoped<BookingHandler>();
+            services.AddScoped<BookingCalendarHandler>();
             services.AddSingleton<IDictionary<int, BookingViewModel>>(new Dictionary<int, BookingViewModel>());
         }
 
