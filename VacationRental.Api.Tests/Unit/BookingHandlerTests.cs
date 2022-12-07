@@ -17,9 +17,10 @@ namespace VacationRental.Api.Tests.Unit
         public void Test_Rental_Booking_Use_Case()
         {
             var catalog = new RentalCatalog();
+            var bookingCatalog = new BookingCatalog();
             var rentalId = catalog.CreateRental(4);
 
-            sut = new BookingHandler(catalog);
+            sut = new BookingHandler(catalog, bookingCatalog);
 
             AssertBookingSuccess(Mothers.BookingRequest.For(rentalId).From(5.December(2022)).Nights(1));
             AssertBookingSuccess(Mothers.BookingRequest.For(rentalId).From(6.December(2022)).Nights(3));
@@ -38,12 +39,12 @@ namespace VacationRental.Api.Tests.Unit
 
         private void AssertBookingFail(Mothers.BookingRequest request)
         {
-            this.sut.Book(request.RentalId, request.RentalFrom, request.RentalNights).Should().BeFalse();
+            this.sut.Book(request.RentalId, request.RentalFrom, request.RentalNights).Success.Should().BeFalse();
         }
 
         private void AssertBookingSuccess(Mothers.BookingRequest request)
         {
-            this.sut.Book(request.RentalId, request.RentalFrom, request.RentalNights).Should().BeTrue();
+            this.sut.Book(request.RentalId, request.RentalFrom, request.RentalNights).Success.Should().BeTrue();
         }
     }
 }

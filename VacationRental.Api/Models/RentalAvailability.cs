@@ -13,15 +13,14 @@ namespace VacationRental.Api.Models
             this.bookings = new List<Booking>();
         }
         
-        public bool TryBook(BookingRequest bookingRequest)
+        public bool TryBook(Booking bookingRequest)
         {
-            var possibleBooking = new Booking(bookingRequest.From, bookingRequest.To);
             foreach (var booking in bookings)
             {
-                if (booking.Overlap(possibleBooking)) return false;
+                if (booking.Overlap(bookingRequest)) return false;
             }
             
-            bookings.Add(possibleBooking);
+            bookings.Add(bookingRequest);
             
             return true;
         }

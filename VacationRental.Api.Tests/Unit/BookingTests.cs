@@ -10,24 +10,24 @@ namespace VacationRental.Api.Tests.Unit
         [Fact]
         public void Test_booking_overlap()
         {
-            var b1 = new Booking(5.December(2022), 8.December(2022));
-            var b2 = new Booking(8.December(2022), 10.December(2022));
+            var b1 = new Booking(1,5.December(2022), 3);
+            var b2 = new Booking(2,8.December(2022), 2);
             AssertNotOverlap(b1, b2);
 
-            b1 = new Booking(1.December(2022), 3.December(2022));
-            b2 = new Booking(1.December(2022), 5.December(2022));
+            b1 = new Booking(3,1.December(2022), 2);
+            b2 = new Booking(4,1.December(2022), 4);
             AssertOverlap(b1, b2);
 
-            b1 = new Booking(5.December(2022), 8.December(2022));
-            b2 = new Booking(6.December(2022), 9.December(2022));
+            b1 = new Booking(5,5.December(2022), 3);
+            b2 = new Booking(6,6.December(2022), 3);
             AssertOverlap(b1, b2);
             
-            b1 = new Booking(5.December(2022), 8.December(2022));
-            b2 = new Booking(6.December(2022), 7.December(2022));
+            b1 = new Booking(7,5.December(2022), 3);
+            b2 = new Booking(8,6.December(2022), 1);
             AssertOverlap(b1, b2);
             
-            b1 = new Booking(5.December(2022), 6.December(2022));
-            b2 = new Booking(6.December(2022), 7.December(2022));
+            b1 = new Booking(9,5.December(2022), 1);
+            b2 = new Booking(10,6.December(2022), 1);
             AssertNotOverlap(b1, b2);
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using VacationRental.Api.RentalBooking;
@@ -27,15 +28,14 @@ namespace VacationRental.Api.Models
             }
         }
 
-        public void Assign(BookingRequest request)
+        public void Assign(Booking booking)
         {
             foreach (var unit in rentalUnits)
             {
-                var result = unit.TryBook(request);
-                if (result)
+                if (unit.TryBook(booking))
                 {
-                    request.FulFill();
-                    return;    
+                    booking.SetReserved();
+                    return;
                 }
             }
         }
@@ -55,7 +55,7 @@ namespace VacationRental.Api.Models
             this.availability = new RentalAvailability();
         }
 
-        public bool TryBook(BookingRequest request)
+        public bool TryBook(Booking request)
         {
             return this.availability.TryBook(request);
         }
