@@ -35,6 +35,7 @@ namespace VacationRental.Api.Tests.Integration
         }
 
         [Fact]
+        //See booking_scenario.excalidraw to see a graphic representation
         public async Task Test_Overlapping_Booking()
         {
             var rentalId = await CreateRental(4);
@@ -49,7 +50,9 @@ namespace VacationRental.Api.Tests.Integration
 
             await AssertBookingSuccess(BookingRequest.For(rentalId).From(8.December(2022)).Nights(1));
             
-            await AssertBookingFail(BookingRequest.For(rentalId).From(5.December(2022)).Nights(3));
+            await AssertBookingSuccess(BookingRequest.For(rentalId).From(5.December(2022)).Nights(1));
+
+            await AssertBookingFail(BookingRequest.For(rentalId).From(5.December(2022)).Nights(4));
         }
 
         private async Task AssertBookingFail(BookingBindingModel bookingRequest)
