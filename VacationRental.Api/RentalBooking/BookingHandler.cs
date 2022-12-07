@@ -17,7 +17,7 @@ namespace VacationRental.Api.RentalBooking
         public BookingResult Book(int rentalId, DateTime from, int nights)
         {
             Rental rental = this.rentalCatalog.Get(rentalId);
-            var booking = new Booking(rentalId, @from, nights);
+            Booking booking = rental.CreateBooking(from, nights);
             rental.Assign(booking);
 
             if (booking.IsReserved())

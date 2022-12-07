@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace VacationRental.Api.Models
 {
@@ -25,6 +26,11 @@ namespace VacationRental.Api.Models
             {
                 this.AddUnit();
             }
+        }
+
+        public Booking CreateBooking(DateTime from, int nights)
+        {
+            return new Booking(this.id, from, nights);
         }
 
         public void Assign(Booking booking)
