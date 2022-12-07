@@ -49,6 +49,14 @@ namespace VacationRental.Api.Models
             return this.reserved;
         }
 
+        public bool HasReservationFor(int rentalId, DateTime date)
+        {
+            if (!this.IsReserved()) return false;
+            if (this.rentalId != rentalId) return false;
+
+            return this.@from <= date && this.to > date;
+        }
+
         public BookingInfo GetInfo()
         {
             return new BookingInfo(this.rentalId, this.@from, this.nights);

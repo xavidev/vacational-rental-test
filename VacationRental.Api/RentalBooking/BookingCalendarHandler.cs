@@ -14,7 +14,7 @@ namespace VacationRental.Api.RentalBooking
             this.bookingCatalog = bookingCatalog;
         }
 
-        public Calendar GetBookingCalendarFor(int rentalId, DateTime from, int nights)
+        public BookingCalendar GetBookingCalendarFor(int rentalId, DateTime from, int nights)
         {
             if (nights < 0) throw new ApplicationException("Nights must be positive");
 

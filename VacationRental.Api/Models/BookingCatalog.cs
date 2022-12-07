@@ -22,9 +22,9 @@ namespace VacationRental.Api.Models
             return bookings[bookingId];
         }
 
-        public Calendar GetBookingCalendarFor(int rentalId, DateTime from, int nights)
+        public BookingCalendar GetBookingCalendarFor(int rentalId, DateTime from, int nights)
         {
-            var result  = new Calendar();
+            var result  = new BookingCalendar();
             for (var i = 0; i < nights; i++)
             {
                 var date = new CalendarDate
@@ -35,8 +35,7 @@ namespace VacationRental.Api.Models
 
                 foreach (var booking in bookings)
                 {
-                    if (booking.Value.RentalId == rentalId
-                        && booking.Value.From <= date.Date && booking.Value.From.AddDays(booking.Value.Nights) > date.Date)
+                    if (booking.Value.HasReservationFor(rentalId, date.Date))
                     {
                         date.Bookings.Add(new DateBooking() { Id = booking.Key });
                     }
@@ -49,7 +48,7 @@ namespace VacationRental.Api.Models
         }
     }
 
-    public class Calendar
+    public class BookingCalendar
     {
         public List<CalendarDate> Dates { get; set; } = new List<CalendarDate>();
     }
