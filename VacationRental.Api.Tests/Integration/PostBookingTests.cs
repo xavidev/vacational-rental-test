@@ -72,33 +72,5 @@ namespace VacationRental.Api.Tests.Integration
             Assert.Equal(bookingRequest.Nights, getBookingResult.Nights);
             Assert.Equal(bookingRequest.Start, getBookingResult.Start);
         }
-
-        private async Task<int> BookRental(BookingBindingModel bookingRequest)
-        {
-            var postBookingResponse = await _client.PostAsJsonAsync($"/api/v1/bookings", bookingRequest);
-
-            Assert.True(postBookingResponse.IsSuccessStatusCode);
-            var postBookingResult = await postBookingResponse.Content.ReadAsAsync<ResourceIdViewModel>();
-
-            return postBookingResult.Id;
-        }
-
-        private async Task<int> CreateRental(int rentalUnits)
-        {
-            var postRentalRequest = new RentalBindingModel
-            {
-                Units = rentalUnits
-            };
-
-            HttpResponseMessage postRentalResponse =
-                await _client.PostAsJsonAsync($"/api/v1/rentals", postRentalRequest);
-
-            Assert.True(postRentalResponse.IsSuccessStatusCode);
-            ResourceIdViewModel postRentalResult = await postRentalResponse.Content.ReadAsAsync<ResourceIdViewModel>();
-
-            return postRentalResult.Id;
-        }
-
-        
     }
 }
