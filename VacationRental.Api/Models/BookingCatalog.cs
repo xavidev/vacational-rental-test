@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace VacationRental.Api.Models
@@ -33,9 +34,9 @@ namespace VacationRental.Api.Models
                     Bookings = new List<DateBooking>()
                 };
 
-                foreach (var booking in bookings)
+                foreach (var booking in bookings.Where(x => x.Value.RentalId == rentalId))
                 {
-                    if (booking.Value.HasReservationFor(rentalId, date.Date))
+                    if (booking.Value.HasReservationFor(date.Date))
                     {
                         date.Bookings.Add(new DateBooking() { Id = booking.Key });
                     }

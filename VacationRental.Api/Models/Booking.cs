@@ -9,6 +9,8 @@ namespace VacationRental.Api.Models
         private readonly DateTime to;
         private readonly int nights;
         private bool reserved;
+
+        public int RentalId => this.rentalId;
         
         public Booking(int rentalId, DateTime from, int nights)
         {
@@ -18,7 +20,7 @@ namespace VacationRental.Api.Models
             this.to = from.AddDays(nights);
             this.reserved = false;
         }
-
+        
         public bool Overlap(Booking other)
         {
             return SameFrom(other) || IsIn(other);
@@ -44,7 +46,7 @@ namespace VacationRental.Api.Models
             return this.reserved;
         }
 
-        public bool HasReservationFor(int rentalId, DateTime date)
+        public bool HasReservationFor(DateTime date)
         {
             if (!this.IsReserved()) return false;
             if (this.rentalId != rentalId) return false;
