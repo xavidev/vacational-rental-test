@@ -8,14 +8,11 @@ using FluentAssertions.Extensions;
 
 namespace VacationRental.Api.Tests.Integration
 {
-    [Collection("Integration")]
-    public class PostBookingTests
+    public class PostBookingTests : TestBase
     {
-        private readonly HttpClient _client;
-
-        public PostBookingTests(IntegrationFixture fixture)
+        public PostBookingTests(IntegrationFixture fixture) : base(fixture)
         {
-            _client = fixture.Client;
+            
         }
 
         [Fact]
