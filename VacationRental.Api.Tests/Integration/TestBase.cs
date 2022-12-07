@@ -23,12 +23,13 @@ namespace VacationRental.Api.Tests.Integration
 
             return postBookingResult.Id;
         }
-
-        protected async Task<int> CreateRental(int rentalUnits)
+        
+        protected async Task<int> CreateRental(int rentalUnits, int preparationDays = 0)
         {
             var postRentalRequest = new RentalBindingModel
             {
-                Units = rentalUnits
+                Units = rentalUnits,
+                PreparationTime = preparationDays
             };
 
             HttpResponseMessage postRentalResponse =

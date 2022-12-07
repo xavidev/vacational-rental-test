@@ -37,6 +37,10 @@ namespace VacationRental.Api.Controllers
                     Id = b.Id,
                     Unit = b.Unit
                 }).ToList(),
+                PreparationTimes = x.PreparationTimes.Select(pt => new CalendarPreparationViewModel
+                {
+                    Unit = pt.Unit
+                }).ToList(),
                 Date = x.Date
             }).ToList());
 

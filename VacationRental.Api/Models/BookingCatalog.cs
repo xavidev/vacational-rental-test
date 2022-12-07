@@ -38,7 +38,14 @@ namespace VacationRental.Api.Models
                 {
                     if (booking.Value.HasReservationFor(date.Date))
                     {
-                        date.Bookings.Add(new DateBooking() { Id = booking.Key, Unit = booking.Value.Unit });
+                        if (booking.Value.IsInPreparation(date.Date))
+                        {
+                            date.PreparationTimes.Add(new PreparationBooking {Unit = booking.Value.Unit});
+                        }
+                        else
+                        {
+                            date.Bookings.Add(new DateBooking() { Id = booking.Key, Unit = booking.Value.Unit });
+                        }
                     }
                 }
 
@@ -47,6 +54,11 @@ namespace VacationRental.Api.Models
 
             return result;
         }
+    }
+
+    public class PreparationBooking
+    {
+        public int Unit { get; set; }
     }
 
     public class BookingCalendar
@@ -64,5 +76,6 @@ namespace VacationRental.Api.Models
     {
         public DateTime Date { get; set; }
         public List<DateBooking> Bookings { get; set; } = new List<DateBooking>();
+        public List<PreparationBooking> PreparationTimes { get; set; } = new List<PreparationBooking>();
     }
 }
