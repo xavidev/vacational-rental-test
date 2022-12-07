@@ -1,5 +1,3 @@
-using System;
-using System.Threading;
 using FluentAssertions;
 using FluentAssertions.Extensions;
 using VacationRental.Api.Models;
