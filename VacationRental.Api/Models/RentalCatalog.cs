@@ -7,10 +7,10 @@ namespace VacationRental.Api.Models
     {
         private static readonly IDictionary<int, Rental> _rentals = new Dictionary<int, Rental>();
 
-        public int CreateRental(int units)
+        public int CreateRental(int units, int preparationTime)
         {
             var id = _rentals.Keys.Count + 1;
-            _rentals.Add(id, Rental.Create(id, units));
+            _rentals.Add(id, Rental.Create(id, units, preparationTime));
 
             return id;
         }

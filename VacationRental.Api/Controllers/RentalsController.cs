@@ -33,7 +33,7 @@ namespace VacationRental.Api.Controllers
         {
             return new ResourceIdViewModel()
             {
-                Id = rentalCatalog.CreateRental(model.Units) 
+                Id = rentalCatalog.CreateRental(model.Units, model.PreparationTime) 
             };
         }
     }

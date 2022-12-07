@@ -20,7 +20,8 @@ namespace VacationRental.Api.Tests.Integration
         {
             var request = new RentalBindingModel
             {
-                Units = 25
+                Units = 25,
+                PreparationTime = 2
             };
 
             ResourceIdViewModel postResult;

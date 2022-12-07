@@ -7,18 +7,20 @@ namespace VacationRental.Api.Models
     public class Rental
     {
         private readonly int id;
+        private readonly int preparationTime;
         private readonly List<RentalUnit> rentalUnits;
         public int Units { get; }
         public int Id => this.id;
 
-        public static Rental Create(int id, int units)
+        public static Rental Create(int id, int units, int preparationTime)
         {
-            return new Rental(id, units);
+            return new Rental(id, units, preparationTime);
         }
 
-        private Rental(int id, int units)
+        private Rental(int id, int units, int preparationTime)
         {
             this.id = id;
+            this.preparationTime = preparationTime;
             Units = units;
             this.rentalUnits = new List<RentalUnit>();
 
@@ -30,7 +32,7 @@ namespace VacationRental.Api.Models
 
         public Booking CreateBooking(DateTime from, int nights)
         {
-            return new Booking(this.id, from, nights);
+            return new Booking(this.id, from, nights, this.preparationTime);
         }
 
         public void Assign(Booking booking)
