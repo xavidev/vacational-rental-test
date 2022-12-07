@@ -31,10 +31,12 @@ namespace VacationRental.Api.Models
         {
             foreach (var unit in rentalUnits)
             {
-                if (!unit.TryBook(request)) continue;
-                
-                request.FulFill();
-                return;
+                var result = unit.TryBook(request);
+                if (result)
+                {
+                    request.FulFill();
+                    return;    
+                }
             }
         }
 
