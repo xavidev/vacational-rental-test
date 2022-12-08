@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using VacationRental.Api.Controllers.Models;
 using VacationRental.Api.Models;
+using VacationRental.Api.RentalBooking;
 
 namespace VacationRental.Api
 {
@@ -25,7 +27,10 @@ namespace VacationRental.Api
 
             services.AddSwaggerGen(opts => opts.SwaggerDoc("v1", new Info { Title = "Vacation rental information", Version = "v1" }));
 
-            services.AddSingleton<IDictionary<int, RentalViewModel>>(new Dictionary<int, RentalViewModel>());
+            services.AddSingleton(new RentalCatalog());
+            services.AddSingleton(new BookingCatalog());
+            services.AddScoped<BookingHandler>();
+            services.AddScoped<BookingCalendarHandler>();
             services.AddSingleton<IDictionary<int, BookingViewModel>>(new Dictionary<int, BookingViewModel>());
         }
 

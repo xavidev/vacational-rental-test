@@ -1,0 +1,37 @@
+@startuml
+
+abstract class Rental {
+	+ Units
+	+ rent()
+	+ assign(Booking)
+}
+class Booking
+class CovidBooking
+
+class RentalCatalog {
++ createRental(units):Rental
++ HaveRental(rentalId):bool
+}
+
+
+
+Booking <|-- CovidBooking
+
+class RentalAvailability {
+	+ bool isAvailable()
+}
+class Bed
+class Room
+class Flat
+
+RentalCatalog --> Rental : create
+Rental o-- Booking : "0..*"
+
+Rental *-- RentalAvailability
+
+Rental <|-- Bed
+Rental <|-- Room
+Rental <|-- Flat
+
+
+@enduml

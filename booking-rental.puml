@@ -1,0 +1,15 @@
+@startuml
+
+--> BookingHandler : Book(rentalId, from, nights)
+
+BookingHandler --> Booking : create:b
+BookingHandler --> RentalCatalog : Get(rentalId):r
+BookingHandler --> "r:Rental" : IsAvailable(from, days)
+
+"r:Rental" --> RentalAvailability : AvailableFor(from, to)
+
+BookingHandler --> "r:Rental" : Assign(b)
+
+"r:Rental" --> RentalAvailability : SetAvailability(from, to)
+
+@enduml
