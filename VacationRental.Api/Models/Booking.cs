@@ -6,10 +6,10 @@ namespace VacationRental.Api.Models
     {
         private readonly int rentalId;
         private readonly DateTime @from;
-        private readonly DateTime to;
+        private  DateTime to;
         private readonly int nights;
         private bool reserved;
-        private readonly int preparationDays;
+        private int preparationDays;
         private int unit;
 
         public int RentalId => this.rentalId;
@@ -75,6 +75,17 @@ namespace VacationRental.Api.Models
         public BookingInfo GetInfo()
         {
             return new BookingInfo(this.rentalId, this.@from, this.nights);
+        }
+
+        public void Release()
+        {
+            this.reserved = false;
+        }
+
+        public void SetPreparationDays(int preparationDays)
+        {
+            this.preparationDays = preparationDays;
+            this.to = this.@from.AddDays(nights + this.preparationDays);
         }
     }
 

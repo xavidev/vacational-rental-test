@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using VacationRental.Api.Controllers.Models;
 using VacationRental.Api.Models;
 
@@ -35,6 +37,21 @@ namespace VacationRental.Api.Controllers
             {
                 Id = rentalCatalog.CreateRental(model.Units, model.PreparationTime) 
             };
+        }
+        
+        [HttpPut]
+        [Route("{rentalId:int}")]
+        public ActionResult Put(int rentalId, RentalBindingModel model)
+        {
+            try
+            {
+                this.rentalCatalog.UpdateRental(rentalId, model.Units, model.PreparationTime);
+                return Ok();
+            }
+            catch (InvalidOperationException e)
+            {
+                return Conflict();
+            }
         }
     }
 }

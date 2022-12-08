@@ -26,5 +26,11 @@ namespace VacationRental.Api.Models
         {
             return _rentals.ContainsKey(rentalId);
         }
+
+        public void UpdateRental(int rentalId, int modelUnits, int preparationDays)
+        {
+            Rental rental = this.Get(rentalId);
+            rental.Update(modelUnits, preparationDays);
+        }
     }
 }
